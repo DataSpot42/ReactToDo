@@ -28,7 +28,7 @@ export default function App() {
   const [currentTodo, setCurrentTodo] = useState({});
   /* const [style, setStyle] = useState("cont"); */
   console.log(enableAnimations)
-  setIsCompleted(false)
+  /* setIsCompleted(false) */
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
