@@ -17,7 +17,7 @@ export default function App() {
     }
   });
   
-  const [selected, setSelected] = useState(false);
+  /* const [selected, setSelected] = useState(false); */
   const [parent, enableAnimations] = useAutoAnimate({duration: 500})
   const [todo, setTodo] = useState("");
   // boolean state to know if we are editing (this will let us display
@@ -26,7 +26,7 @@ export default function App() {
   const [isCompleted, setIsCompleted] = useState(false);
   // object state to set so we know which todo item we are editing
   const [currentTodo, setCurrentTodo] = useState({});
-  const [style, setStyle] = useState("cont");
+  /* const [style, setStyle] = useState("cont"); */
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -101,7 +101,7 @@ export default function App() {
   }
   function handleCompletedClick(todo) {
     // set editing to true
-    if (todo.selected==false){
+    if (todo.selected===false){
     console.log('Goto True')
     console.log(todo.selected)    
     todo.styled = "todo-completed-item"
