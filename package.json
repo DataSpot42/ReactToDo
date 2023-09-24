@@ -2,7 +2,7 @@
   "name": "todo-react-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://DataSpot42.github.io/ReactToDo",
+  
   "dependencies": {
     "@formkit/auto-animate": "^0.7.0",
     "@react-spectrum/button": "^3.12.4",
