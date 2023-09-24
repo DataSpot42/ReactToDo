@@ -27,7 +27,8 @@ export default function App() {
   // object state to set so we know which todo item we are editing
   const [currentTodo, setCurrentTodo] = useState({});
   /* const [style, setStyle] = useState("cont"); */
-
+  console.log(enableAnimations)
+  setIsCompleted(false)
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
