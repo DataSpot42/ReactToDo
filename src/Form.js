@@ -23,6 +23,7 @@ export default function App() {
   // boolean state to know if we are editing (this will let us display
   // different inputs based on a condition (conditional rendering)
   const [isEditing, setIsEditing] = useState(false);
+  // eslint-disable-next-line 
   const [isCompleted, setIsCompleted] = useState(false);
   // object state to set so we know which todo item we are editing
   const [currentTodo, setCurrentTodo] = useState({});
