@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { ToggleButton } from "./toggleButton";
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { motion, AnimatePresence, Reorder } from "framer-motion";
 
 
 
 export default function App() {
 
-  
+
   const [todos, setTodos] = useState(() => {
     const savedTodos = localStorage.getItem("todos");
     if (savedTodos) {
@@ -16,9 +17,9 @@ export default function App() {
       return [];
     }
   });
-  
+
   /* const [selected, setSelected] = useState(false); */
-  const [parent, enableAnimations] = useAutoAnimate({duration: 500})
+
   const [todo, setTodo] = useState("");
   // boolean state to know if we are editing (this will let us display
   // different inputs based on a condition (conditional rendering)
@@ -28,7 +29,7 @@ export default function App() {
   // object state to set so we know which todo item we are editing
   const [currentTodo, setCurrentTodo] = useState({});
   /* const [style, setStyle] = useState("cont"); */
-  console.log(enableAnimations)
+
   /* setIsCompleted(false) */
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -44,7 +45,7 @@ export default function App() {
     setCurrentTodo({ ...currentTodo, text: e.target.value });
     console.log(currentTodo);
   }
- 
+
 
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -103,22 +104,24 @@ export default function App() {
   }
   function handleCompletedClick(todo) {
     // set editing to true
-    if (todo.selected===false){
-    console.log('Goto True')
-    console.log(todo.selected)    
-    todo.styled = "todo-completed-item"
-    todo.selected = true
-    console.log(todo.styled)}
-    else {     
-        console.log('Goto False')
-        console.log(todo)        
-        todo.styled = "todo-list-item"
-        todo.selected = false
-        console.log(todo.styled)}    
+    if (todo.selected === false) {
+      console.log('Goto True')
+      console.log(todo.selected)
+      todo.styled = "todo-completed-item"
+      todo.selected = true
+      console.log(todo.styled)
+    }
+    else {
+      console.log('Goto False')
+      console.log(todo)
+      todo.styled = "todo-list-item"
+      todo.selected = false
+      console.log(todo.styled)
+    }
     // set the currentTodo to the todo item that was clicked 
-        setCurrentTodo({ ...todo })
-        console.log(isCompleted)
-        return(todo)
+    setCurrentTodo({ ...todo })
+    console.log(isCompleted)
+    return (todo)
   }
 
   return (
@@ -134,7 +137,7 @@ export default function App() {
           <label className="textbox" htmlFor="editTodo">Edit todo: </label>
           {/* notice that the value for the update input is set to the currentTodo state */}
           {/* also notice the handleEditInputChange is being used */}
-          <input            
+          <input
             name="editTodo"
             type="text"
             className="textbox"
@@ -155,7 +158,7 @@ export default function App() {
           <h2>Add Todo</h2>
           {/* also added a label for the input */}
           <label className="textbox" htmlFor="todo">Add todo: </label>
-          
+
           <input
             name="todo"
             type="text"
@@ -166,33 +169,49 @@ export default function App() {
           />
           {/* here we just added a "Add" button element - use the type="submit" on the button which will still submit the form when clicked using the handleFormSubmit function */}
           <button class="buttons" type="submit">Add</button>
-          
+
         </form>
-        
+
       )}
-   
-      <ul ref={parent}>
-        {todos.map((todo) => (
+
+      <ul>
+        <AnimatePresence>
+         
+
+
+            {todos.map((todo) => (
+
+
+
+              <motion.li key={todo.id} value={todo} className={todo.styled} initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                exit={{ x: "-100vh", opacity: 0 }}>
+
+                {`${todo.text}`}
+                <br></br>
+                {/* we are passing the entire todo object to the handleEditClick function*/}
+                <button className="buttons2" onClick={() => handleEditClick(todo)}>Edit</button>
+                <button className="buttons2" onClick={() => handleDeleteClick(todo.id)}>Delete</button>
+                <div className="todo-toggle">
+                  <ToggleButton
+                    selected={todo.selected}
+                    toggleSelected={() => {
+                      handleCompletedClick(todo);
+                    }} /></div>
+
+              </motion.li>
+            ))}
+
+
           
-          
-            <li key={todo.id} className={todo.styled}>
-            {`${todo.text}`}
-            
-              {/* we are passing the entire todo object to the handleEditClick function*/}
-              <button className="buttons" onClick={() => handleEditClick(todo)}>Edit</button>
-              <button className="buttons" onClick={() => handleDeleteClick(todo.id)}>Delete</button>
-              <div className="todo-toggle">
-                <ToggleButton
-                selected={todo.selected}
-                toggleSelected={() => {
-                handleCompletedClick(todo);}}/></div></li>
-          
-        ))}
+        </AnimatePresence>
       </ul>
-     
-      <div><button class="buttons" onClick={() => handleClearAll(todos)}>ClearAll</button></div>
-      
+
+
+      <div><button class="buttons2" onClick={() => handleClearAll(todos)}>ClearAll</button></div>
+
     </div>
- );
+  );
 
 }
